@@ -95,3 +95,13 @@ VALUES  ( N'admin' , -- UserName - nvarchar(100)
           1  -- Type - int
         )
 GO
+
+CREATE PROC USP_GetAccountByUserName
+@userName NVARCHAR(100)
+AS
+	BEGIN 
+		SELECT * FROM dbo.Account WHERE UserName = @userName
+END
+GO
+
+EXEC dbo.USP_GetAccountByUserName @userName = N'Admin' -- nvarchar(100)

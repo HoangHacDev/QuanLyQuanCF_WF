@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using QuanLyQuanCF.DAO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,10 +22,13 @@ namespace QuanLyQuanCF
 
         void LoadAccountList()
         {
-            string connectString = "Data Source=DESKTOP-24HNE0N;Initial Catalog=QuanLyQuanCaffe;Integrated Security=True;Trust Server Certificate=True";
-            SqlConnection connection = new SqlConnection(connectString);
-            string query = "SELECT * FROM dbo.Account";
-            SqlCommand command = new SqlCommand(query);
+            // câu truy vấn query
+            //string query = "SELECT DisplayName as [Tên hiển thị] FROM dbo.Account";
+            string query = "EXEC dbo.USP_GetAccountByUserName @userName";
+            // Khởi tạo đối tượng từ lớp DataProvider
+            DataProvider provider = new DataProvider();
+            // Hiển thị dữ liệu dựa trên câu truy vấn , gán vô view
+            DtgvShowUser_Ad.DataSource = provider.ExecuteQuery(query, new object[] {"staff"});
         }            
 
         private void TpFood_Click(object sender, EventArgs e)
